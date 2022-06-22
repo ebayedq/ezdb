@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Testsuite">
+   <tasks>
+      <export name="export foo">
+         <statement><![CDATA[select foo from bar where bar = 2]]></statement>
+         <parameters/>
+      </export>
+   </tasks>
+</suite>

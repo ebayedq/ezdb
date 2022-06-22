@@ -1,0 +1,25 @@
+<suite xmlns:ez="http://eztools.de/ezdb/1.0"
+       xsi:schemaLocation="http://eztools.de/ezdb/1.0 ezdb-1.0.xsd"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="suite name">
+<!--    <tasks>-->
+<!--        <copy name="test">-->
+<!--            <selectStatement><![CDATA[select 1 from table where klasse =${klasse}]]></selectStatement>-->
+<!--            <insertStatement><![CDATA[insert into table]]></insertStatement>-->
+<!--            <parameters>-->
+<!--                <parameter name="klasse" type="java.lang.String"/>-->
+<!--            </parameters>-->
+<!--        </copy>-->
+<!--        <update name="test2">-->
+<!--            <statement><![CDATA[select 1]]></statement>-->
+
+<!--        </update>-->
+
+<!--    </tasks>-->
+    <tasks>
+        <print>
+            <parameters>
+                <parameter name="" type=""/>
+            </parameters>
+        </print>
+    </tasks>
+</suite>

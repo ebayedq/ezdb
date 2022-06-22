@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:ns0="http://eztools.de/ezdb/1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://eztools.de/ezdb/1.0" elementFormDefault="qualified">
+   <xsd:complexType name="xmlSuite">
+      <xsd:all>
+         <xsd:element name="tasks" minOccurs="0">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:choice maxOccurs="unbounded">
+                     <xsd:element name="copy" type="ns0:xmlCopyTask" minOccurs="0"/>
+                     <xsd:element name="update" type="ns0:xmlUpdateTask" minOccurs="0"/>
+                     <xsd:element name="print" type="ns0:xmlPrintTask" minOccurs="0"/>
+                     <xsd:element name="importCsv" type="ns0:xmlImportTask" minOccurs="0"/>
+                     <xsd:element name="exportBinary" type="ns0:xmlBinaryExportTask" minOccurs="0"/>
+                     <xsd:element name="exportCsv" type="ns0:xmlCsvExportTask" minOccurs="0"/>
+                  </xsd:choice>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+      </xsd:all>
+      <xsd:attribute name="name" type="xsd:string"/>
+   </xsd:complexType>
+   <xsd:complexType name="xmlCopyTask">
+      <xsd:all>
+         <xsd:element name="selectStatement" type="xsd:string"/>
+         <xsd:element name="insertStatement" type="xsd:string"/>
+         <xsd:element name="parameters" minOccurs="0">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="parameter" type="ns0:xmlParameter" minOccurs="0" maxOccurs="unbounded"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+      </xsd:all>
+      <xsd:attribute name="name" type="xsd:string"/>
+   </xsd:complexType>
+   <xsd:complexType name="xmlParameter">
+      <xsd:sequence/>
+      <xsd:attribute name="name" type="xsd:string" use="required"/>
+      <xsd:attribute name="type" type="xsd:string" use="required"/>
+   </xsd:complexType>
+   <xsd:complexType name="xmlUpdateTask">
+      <xsd:all>
+         <xsd:element name="statement" type="xsd:string"/>
+         <xsd:element name="parameters" minOccurs="0">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="parameter" type="ns0:xmlParameter" minOccurs="0" maxOccurs="unbounded"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+      </xsd:all>
+      <xsd:attribute name="name" type="xsd:string"/>
+   </xsd:complexType>
+   <xsd:complexType name="xmlPrintTask">
+      <xsd:all>
+         <xsd:element name="statement" type="xsd:string"/>
+         <xsd:element name="parameters" minOccurs="0">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="parameter" type="ns0:xmlParameter" minOccurs="0" maxOccurs="unbounded"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+      </xsd:all>
+      <xsd:attribute name="name" type="xsd:string"/>
+   </xsd:complexType>
+   <xsd:complexType name="xmlImportTask">
+      <xsd:all>
+         <xsd:element name="tableName" type="xsd:string"/>
+         <xsd:element name="fileName" type="xsd:string"/>
+         <xsd:element name="format" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="parameters" minOccurs="0">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="parameter" type="ns0:xmlParameter" minOccurs="0" maxOccurs="unbounded"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+      </xsd:all>
+      <xsd:attribute name="name" type="xsd:string"/>
+   </xsd:complexType>
+   <xsd:complexType name="xmlBinaryExportTask">
+      <xsd:all>
+         <xsd:element name="statement" type="xsd:string"/>
+         <xsd:element name="fileNameColumnIndex" type="xsd:int"/>
+         <xsd:element name="dataColumnIndex" type="xsd:int"/>
+         <xsd:element name="filePrefix" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="fileSuffix" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="parameters" minOccurs="0">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="parameter" type="ns0:xmlParameter" minOccurs="0" maxOccurs="unbounded"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+      </xsd:all>
+      <xsd:attribute name="name" type="xsd:string"/>
+   </xsd:complexType>
+   <xsd:complexType name="xmlCsvExportTask">
+      <xsd:all>
+         <xsd:element name="statement" type="xsd:string"/>
+         <xsd:element name="fileName" type="xsd:string"/>
+         <xsd:element name="format" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="parameters" minOccurs="0">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="parameter" type="ns0:xmlParameter" minOccurs="0" maxOccurs="unbounded"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+      </xsd:all>
+      <xsd:attribute name="name" type="xsd:string"/>
+   </xsd:complexType>
+   <xsd:element name="suite" type="ns0:xmlSuite"/>
+   <xsd:element name="copy" type="ns0:xmlCopyTask"/>
+   <xsd:element name="parameter" type="ns0:xmlParameter"/>
+   <xsd:element name="update" type="ns0:xmlUpdateTask"/>
+   <xsd:element name="print" type="ns0:xmlPrintTask"/>
+   <xsd:element name="import" type="ns0:xmlImportTask"/>
+   <xsd:element name="binaryExport" type="ns0:xmlBinaryExportTask"/>
+   <xsd:element name="csvExport" type="ns0:xmlCsvExportTask"/>
+</xsd:schema>
