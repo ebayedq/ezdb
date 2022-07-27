@@ -5,7 +5,7 @@
     <groupId>de.eztools</groupId>
     <artifactId>ezdb</artifactId>
     <packaging>pom</packaging>
-    <version>0.6.0</version>
+    <version>0.7.0</version>
 
     <modules>
         <module>ezdb-api</module>
