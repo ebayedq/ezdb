@@ -6,17 +6,28 @@ import de.eztools.ezdb.api.model.Task;
 import de.eztools.ezdb.api.shell.ConnectionService;
 import de.eztools.ezdb.api.shell.TaskExecutor;
 import de.eztools.ezdb.shell.table.EzTable;
-import de.eztools.ezdb.shell.xml.*;
+import de.eztools.ezdb.shell.xml.XmlBinaryExportTask;
+import de.eztools.ezdb.shell.xml.XmlCopyTask;
+import de.eztools.ezdb.shell.xml.XmlCsvExportTask;
+import de.eztools.ezdb.shell.xml.XmlImportTask;
+import de.eztools.ezdb.shell.xml.XmlParameter;
+import de.eztools.ezdb.shell.xml.XmlPrintTask;
+import de.eztools.ezdb.shell.xml.XmlSuite;
+import de.eztools.ezdb.shell.xml.XmlUpdateTask;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.csv.CSVFormat;
 import org.eclipse.persistence.jaxb.JAXBContextFactory;
 import org.jooq.lambda.Unchecked;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.core.MethodParameter;
 import org.springframework.shell.Availability;
 import org.springframework.shell.CompletionContext;
 import org.springframework.shell.CompletionProposal;
-import org.springframework.shell.standard.*;
+import org.springframework.shell.standard.FileValueProvider;
+import org.springframework.shell.standard.ShellComponent;
+import org.springframework.shell.standard.ShellMethod;
+import org.springframework.shell.standard.ShellMethodAvailability;
+import org.springframework.shell.standard.ShellOption;
+import org.springframework.shell.standard.ValueProvider;
 import org.springframework.stereotype.Component;
 
 import javax.xml.bind.JAXBContext;
@@ -26,7 +37,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Driver;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.ServiceLoader;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -206,7 +224,7 @@ public class EzdbCommands extends EzdbComponent {
 
     @ShellMethod("Import from CSV file")
     public void importCsv(@ShellOption(help = "Target table name") String tableName,
-                          @ShellOption(help = "File to be inserted") File fileName,
+                          @ShellOption(help = "File to be inserted", valueProvider = FileValueProvider.class) File fileName,
                           @ShellOption(help = "CSV format. See org.apache.commons.csv.CSVFormat.Predefined", defaultValue = XmlImportTask.DEFAULT_FORMAT, valueProvider = CsvFormatValueProvider.class) CSVFormat.Predefined format) {
 
         XmlImportTask task = new XmlImportTask();
@@ -291,10 +309,10 @@ public class EzdbCommands extends EzdbComponent {
     }
 
     @Component
-    class ParameterNameValueProvider extends ValueProviderSupport {
+    class ParameterNameValueProvider implements ValueProvider {
 
         @Override
-        public List<CompletionProposal> complete(MethodParameter parameter, CompletionContext completionContext, String[] hints) {
+        public List<CompletionProposal> complete(CompletionContext completionContext) {
             return taskExecutor.getParameters().keySet().stream()
                     .map(Parameter::getName)
                     .distinct()
