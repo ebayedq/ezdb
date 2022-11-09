@@ -15,11 +15,13 @@ public class PooledConnectionService implements ConnectionService {
     @Override
     public void connect(Properties properties) {
         try {
-            connectionSupplier = new HikariPooledConnectionSupplier(properties);
+            HikariPooledConnectionSupplier connectionSupplier = new HikariPooledConnectionSupplier(properties);
 
             //test connection
             Connection connection = connectionSupplier.get();
             connection.close();
+
+            this.connectionSupplier = connectionSupplier;
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);
         }
