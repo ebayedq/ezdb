@@ -30,10 +30,11 @@ import org.springframework.shell.standard.ShellOption;
 import org.springframework.shell.standard.ValueProvider;
 import org.springframework.stereotype.Component;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Unmarshaller;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.Unmarshaller;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Driver;
@@ -254,7 +255,7 @@ public class EzdbCommands extends EzdbComponent {
         List<Task> tasks = pathToFileList(taskFile).stream()
                 .map(Unchecked.function(unmarshaller::unmarshal))
                 .map(Task.class::cast)
-                .collect(Collectors.toList());
+                .toList();
 
         tasks.stream()
                 .map(Task::flatten)
@@ -269,10 +270,12 @@ public class EzdbCommands extends EzdbComponent {
             return Collections.singletonList(path);
         }
 
-        return StreamSupport.stream(Files.newDirectoryStream(path.toPath(), "*.xml").spliterator(), false)
-                .map(Path::toFile)
-                .sorted(Comparator.comparing(File::getName))
-                .collect(Collectors.toList());
+        try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(path.toPath(), "*.xml")) {
+            return StreamSupport.stream(directoryStream.spliterator(), false)
+                    .map(Path::toFile)
+                    .sorted(Comparator.comparing(File::getName))
+                    .collect(Collectors.toList());
+        }
     }
 
     @ShellMethod("Print connection pool status")

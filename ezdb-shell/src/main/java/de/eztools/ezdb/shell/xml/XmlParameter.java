@@ -3,8 +3,8 @@ package de.eztools.ezdb.shell.xml;
 import de.eztools.ezdb.api.model.Parameter;
 import lombok.Data;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "parameter")
 @Data

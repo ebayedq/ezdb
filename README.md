@@ -64,7 +64,7 @@ For Supported formats see [Apache Commons CSV](https://commons.apache.org/proper
 
 ### Export binary task
 
-Exports Blob data. For each row tín the result set a file will generated.
+Exports Blob data. For each row in the result set a file will be generated.
 
 ```xml
     <exportBinary name="Export departments">
