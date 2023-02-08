@@ -186,8 +186,8 @@
                             </classPath>
                             <jre>
                                 <path>jre</path>
-                                <minVersion>1.8.0</minVersion>
-                                <maxVersion>1.8.0_999</maxVersion>
+                                <minVersion>17.0.0</minVersion>
+                                <maxVersion>17.999.999</maxVersion>
                                 <requiresJdk>false</requiresJdk>
                             </jre>
                             <versionInfo>
