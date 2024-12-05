@@ -103,6 +103,12 @@ public class EzdbComponent extends AbstractShellComponent {
         print(message, AttributedStyle.CYAN);
     }
 
+    protected void print(String message) {
+        AttributedString attributedString = new AttributedString(message);
+        getTerminal().writer().println(attributedString.toAnsi());
+
+    }
+
     private void print(String message, int style) {
         AttributedString attributedString = new AttributedString(message, AttributedStyle.DEFAULT.foreground(style));
         getTerminal().writer().println(attributedString.toAnsi());

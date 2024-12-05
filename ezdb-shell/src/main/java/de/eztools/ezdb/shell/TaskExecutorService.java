@@ -76,7 +76,7 @@ public class TaskExecutorService extends EzdbComponent implements TaskExecutor {
             }
             batchProcessor.commit();
             targetConnection.setAutoCommit(true);
-            getTerminal().writer().println(batchProcessor.getRows() + " row(s) inserted");
+            printInfo(batchProcessor.getRows() + " row(s) inserted");
         }
     }
 
@@ -95,7 +95,7 @@ public class TaskExecutorService extends EzdbComponent implements TaskExecutor {
         try (Connection connection = targetConnectionService.getConnection();
              PreparedStatement updateStatement = createStatement(statement, parameters, regex, connection)) {
             int result = updateStatement.executeUpdate();
-            getTerminal().writer().println(result + " row(s) updated");
+            printInfo(result + " row(s) updated");
         }
     }
 
@@ -123,7 +123,7 @@ public class TaskExecutorService extends EzdbComponent implements TaskExecutor {
 
             printer.flush();
             printer.close();
-            getTerminal().writer().println(file.length() + " bytes written to " + file);
+            printInfo(file.length() + " bytes written to " + file);
         }
     }
 
@@ -150,7 +150,7 @@ public class TaskExecutorService extends EzdbComponent implements TaskExecutor {
                     .renderWithRowCount();
 
             selectResultSet.close();
-            getTerminal().writer().println(table);
+            print(table);
         }
     }
 
@@ -210,7 +210,7 @@ public class TaskExecutorService extends EzdbComponent implements TaskExecutor {
                 batchProcessor.addBatch();
             }
             batchProcessor.commit();
-            getTerminal().writer().println(batchProcessor.getRows() + " rows inserted into " + tableName);
+            printInfo(batchProcessor.getRows() + " rows inserted into " + tableName);
 
             connection.setAutoCommit(true);
         } finally {
@@ -255,7 +255,7 @@ public class TaskExecutorService extends EzdbComponent implements TaskExecutor {
 
                 rows++;
             }
-            getTerminal().writer().println(rows + " file(s) exported");
+            printInfo(rows + " file(s) exported");
         }
     }
 

@@ -49,21 +49,23 @@ public class EzdbCommands extends EzdbComponent {
 
     @ShellMethod(value = "Create target database connection", key = {"connect", "connect-target"})
     public String connectTarget(@ShellOption(help = "JDBC database URL") String url,
-                                @ShellOption(help = "Will be prompted of not supplied", defaultValue = NULL) String user) {
-        connect(targetConnectionService, url, user);
+                                @ShellOption(help = "Will be prompted of not supplied", defaultValue = NULL) String user,
+                                @ShellOption(help = "Will be prompted of not supplied", defaultValue = NULL) String pass) {
+        connect(targetConnectionService, url, user, pass);
         return "Connection successful";
     }
 
     @ShellMethod(value = "Create source database connection (only needed for copy tasks)")
     public String connectSource(@ShellOption(help = "JDBC database URL") String url,
-                                @ShellOption(help = "Will be prompted of not supplied", defaultValue = NULL) String user) {
-        connect(sourceConnectionService, url, user);
+                                @ShellOption(help = "Will be prompted of not supplied", defaultValue = NULL) String user,
+                                @ShellOption(help = "Will be prompted of not supplied", defaultValue = NULL) String pass) {
+        connect(sourceConnectionService, url, user, pass);
         return "Connection successful";
     }
 
-    private void connect(ConnectionService connectionService, String url, String user) {
+    private void connect(ConnectionService connectionService, String url, String user, String pass) {
         String username = user == null ? prompt("Username:", false) : user;
-        String password = prompt("Password:", true);
+        String password = pass == null ? prompt("Password:", true) : pass;
 
         Properties properties = new Properties();
         properties.put("url", url);
@@ -266,6 +268,11 @@ public class EzdbCommands extends EzdbComponent {
                 "Target:" +
                 "\n" +
                 targetConnectionService.getInfo();
+    }
+
+    @ShellMethod("Print message")
+    public void echo(@ShellOption(help = "message") String message) {
+        super.print(message);
     }
 
     private void execute(Task task) {
